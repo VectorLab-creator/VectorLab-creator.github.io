@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Vector Lab</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <script src="https://kit.fontawesome.com/4d5a6f7b45.js" crossorigin="anonymous"></script>
+
+  <style>
+    :root{
+      --negro:#0e0e0e;
+      --gris:#1a1a1a;
+      --gris-claro:#bfbfbf;
+      --blanco:#ffffff;
+      --acento:#e4d4b7; /* Beige premium dorado */
+    }
+
+    *{margin:0;padding:0;box-sizing:border-box}
+
+    body{
+      font-family:'Outfit',sans-serif;
+      background:var(--negro);
+      color:var(--blanco);
+      line-height:1.6;
+    }
+
+    /* Header */
+    header{
+      position:fixed;top:0;left:0;width:100%;
+      padding:20px 60px;
+      display:flex;justify-content:space-between;align-items:center;
+      background:rgba(14,14,14,.85);
+      backdrop-filter:blur(12px);
+      border-bottom:1px solid rgba(255,255,255,.05);
+      z-index:1000;
+    }
+    header h1{font-size:22px;font-weight:700;color:var(--acento)}
+    nav ul{display:flex;gap:30px;list-style:none}
+    nav a{color:#ccc;text-decoration:none;font-weight:400;transition:.3s}
+    nav a:hover{color:var(--acento)}
+
+    /* Secciones */
+    section{padding:120px 20px;max-width:1200px;margin:auto;position:relative}
+    h2{text-align:center;font-size:34px;margin-bottom:15px;font-weight:600;color:var(--acento)}
+    section::after{
+      content:"";display:block;width:80px;height:2px;
+      background:var(--acento);margin:40px auto 0;border-radius:2px;
+    }
+
+    /* Hero */
+    .hero{
+      background:linear-gradient(rgba(14,14,14,.7),rgba(14,14,14,.9)),
+                 url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1500&q=80') center/cover;
+      text-align:center;padding:200px 20px 160px;
+    }
+    .hero h2{font-size:56px;font-weight:700;margin-bottom:20px;color:var(--blanco)}
+    .hero p{font-size:18px;color:var(--gris-claro);max-width:650px;margin:auto;margin-bottom:40px}
+    .btn-cta{
+      display:inline-block;padding:14px 36px;
+      background:var(--acento);color:var(--negro);font-weight:600;
+      border-radius:40px;text-decoration:none;transition:.3s
+    }
+    .btn-cta:hover{filter:brightness(1.1);transform:translateY(-2px)}
+
+    /* Servicios */
+    .servicios ul{
+      display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+      gap:25px;list-style:none;margin-top:50px
+    }
+    .servicios li{
+      background:var(--gris);padding:35px;border-radius:14px;
+      border:1px solid rgba(255,255,255,.08);
+      text-align:center;transition:.3s
+    }
+    .servicios li i{font-size:32px;color:var(--acento);margin-bottom:12px}
+    .servicios li:hover{transform:translateY(-8px);box-shadow:0 0 18px rgba(228,212,183,.15)}
+
+    /* Portafolio */
+    .galeria{
+      display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+      gap:25px;margin-top:50px
+    }
+    .galeria div{position:relative;overflow:hidden;border-radius:12px}
+    .galeria img{
+      width:100%;height:220px;object-fit:cover;
+      transition:.4s;border-radius:12px
+    }
+    .galeria div span{
+      position:absolute;bottom:0;left:0;width:100%;
+      background:rgba(14,14,14,.8);
+      color:var(--acento);padding:12px;text-align:center;
+      transform:translateY(100%);transition:.3s;font-size:15px
+    }
+    .galeria div:hover img{transform:scale(1.05);filter:brightness(1.1)}
+    .galeria div:hover span{transform:translateY(0)}
+
+    /* Proceso creativo */
+    .proceso{margin-top:40px}
+    .pasos{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:25px;margin-top:40px}
+    .paso{
+      text-align:center;padding:25px;background:var(--gris);
+      border-radius:12px;border:1px solid rgba(255,255,255,.08);
+      transition:.3s
+    }
+    .paso i{font-size:28px;color:var(--acento);margin-bottom:10px}
+    .paso:hover{transform:translateY(-5px);background:rgba(255,255,255,.03)}
+
+    /* Sobre */
+    .sobre p{font-size:18px;color:var(--gris-claro);max-width:750px;margin:auto;text-align:center}
+
+    /* Contacto */
+    .contact-card{
+      background:var(--gris);
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:14px;
+      padding:35px;
+      max-width:600px;margin:40px auto;
+      text-align:center;
+    }
+    form{display:flex;flex-direction:column;gap:15px;margin-top:20px}
+    input,textarea{
+      padding:14px;font-size:15px;background:rgba(255,255,255,.03);
+      border:1px solid rgba(255,255,255,.1);color:var(--blanco);
+      border-radius:8px;outline:none
+    }
+    button{
+      padding:14px;background:var(--acento);color:var(--negro);
+      border:none;font-weight:600;font-size:15px;
+      border-radius:30px;cursor:pointer;transition:.3s
+    }
+    button:hover{filter:brightness(1.1);transform:translateY(-2px)}
+    .success-msg,.error-msg{display:none;margin-top:10px;font-size:14px}
+    .success-msg{color:#8f8}
+    .error-msg{color:#f55}
+
+    /* Footer */
+    footer{background:#0b0b0b;color:#777;text-align:center;padding:40px 20px;font-size:14px;border-top:1px solid rgba(255,255,255,.05)}
+    .socials{margin-top:15px}
+    .socials a{color:#777;font-size:20px;margin:0 8px;transition:.3s}
+    .socials a:hover{color:var(--acento);transform:scale(1.2)}
+
+    @media(max-width:768px){
+      header{padding:15px 25px;flex-direction:column;align-items:flex-start;gap:10px}
+      .hero h2{font-size:36px}
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <h1>Vector Lab</h1>
+    <nav>
+      <ul>
+        <li><a href="#inicio">Inicio</a></li>
+        <li><a href="#servicios">Servicios</a></li>
+        <li><a href="#portafolio">Portafolio</a></li>
+        <li><a href="#proceso">Proceso</a></li>
+        <li><a href="#sobre">Sobre</a></li>
+        <li><a href="#contacto">Contacto</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <section id="inicio" class="hero">
+    <h2>Diseñamos Marcas con <span style="color:var(--acento)">Identidad</span></h2>
+    <p>Un estudio creativo que convierte ideas en imágenes poderosas. Branding, logos y comunicación visual con un enfoque premium.</p>
+    <a href="#contacto" class="btn-cta">Solicitar Presupuesto</a>
+  </section>
+
+  <!-- SERVICIOS -->
+<section id="servicios" class="servicios">
+  <h2>Servicios</h2>
+  <ul>
+    <li><i class="fas fa-paint-brush"></i> 🎨<br><strong>Diseño de Logos</strong><p>Creamos logotipos únicos que reflejan la esencia de tu marca.</p></li>
+    <li><i class="fas fa-film"></i> 🎬<br><strong>Edición de Video</strong><p>Producción y edición profesional para captar la atención.</p></li>
+    <li><i class="fas fa-box"></i> 📦<br><strong>Branding Corporativo</strong><p>Construimos la identidad visual completa de tu empresa.</p></li>
+    <li><i class="fas fa-mobile-alt"></i> 📱<br><strong>Diseño para Redes</strong><p>Contenido optimizado para Instagram, TikTok, Facebook y más.</p></li>
+    <li><i class="fas fa-lightbulb"></i> 💡<br><strong>Motion Graphics</strong><p>Animaciones creativas que hacen que tu marca cobre vida.</p></li>
+    <li><i class="fas fa-brain"></i> 🧠<br><strong>Asesoría Creativa</strong><p>Estrategias y guía para destacar con impacto.</p></li>
+  </ul>
+</section>
+
+
+  <!-- PORTAFOLIO -->
+  <section id="portafolio">
+    <h2>Portafolio</h2>
+    <div class="galeria">
+      <div>
+        <img src="https://img.freepik.com/psd-premium/plantilla-maqueta-logotipo-limpio-minimalista-3d_528542-172.jpg" alt="Proyecto 1">
+        <span>Identidad Minimalista</span>
+      </div>
+      <div>
+        <img src="https://img.freepik.com/vector-premium/ilustracion-icono-vector-plantilla-negocio-logotipo-letra_683738-2758.jpg" alt="Proyecto 2">
+        <span>Diseño Tipográfico</span>
+      </div>
+      <div>
+        <img src="https://img.freepik.com/vector-premium/logotipo-nuevos-logotipos-logotipo-adobe-logotipo-photoshop-diseno-vectorial_811396-710.jpg" alt="Proyecto 3">
+        <span>Branding Corporativo</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESO -->
+  <section id="proceso" class="proceso">
+    <h2>Proceso Creativo</h2>
+    <div class="pasos">
+      <div class="paso"><i class="fas fa-comments"></i><h3>Briefing</h3><p>Escuchamos tus ideas y objetivos para tu marca.</p></div>
+      <div class="paso"><i class="fas fa-pencil-ruler"></i><h3>Diseño</h3><p>Desarrollamos propuestas visuales con impacto.</p></div>
+      <div class="paso"><i class="fas fa-sync-alt"></i><h3>Revisión</h3><p>Ajustamos detalles hasta lograr la perfección.</p></div>
+      <div class="paso"><i class="fas fa-rocket"></i><h3>Lanzamiento</h3><p>Tu marca lista para brillar en el mercado.</p></div>
+    </div>
+  </section>
+
+  <!-- SOBRE -->
+  <section id="sobre" class="sobre">
+    <h2>Sobre Nosotros</h2>
+    <p>En Vector Lab creemos que una marca fuerte nace de la simplicidad y la coherencia. Creamos diseños que transmiten confianza, modernidad y estilo premium.</p>
+  </section>
+
+  <!-- CONTACTO -->
+  <section id="contacto">
+    <h2>Contacto</h2>
+    <div class="contact-card">
+      <p>¿Quieres colaborar o pedir presupuesto? Escríbenos:</p>
+      <form id="contactForm" action="https://formspree.io/f/meoleqqo" method="POST">
+        <input type="text" name="name" placeholder="Tu nombre" required />
+        <input type="email" name="email" placeholder="Tu email" required />
+        <textarea name="message" rows="5" placeholder="Tu mensaje..." required></textarea>
+        <button type="submit">Enviar Mensaje</button>
+        <p class="success-msg">✅ ¡Mensaje enviado con éxito!</p>
+        <p class="error-msg">❌ Hubo un error. Intenta de nuevo.</p>
+      </form>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2025 Vector Lab · Diseño con propósito</p>
+    <div class="socials">
+      <a href="#"><i class="fab fa-instagram"></i></a>
+      <a href="#"><i class="fab fa-dribbble"></i></a>
+      <a href="#"><i class="fab fa-behance"></i></a>
+    </div>
+  </footer>
+
+  <!-- JS Form Handler -->
+  <script>
+    const form = document.getElementById("contactForm");
+    const successMsg = document.querySelector(".success-msg");
+    const errorMsg = document.querySelector(".error-msg");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const data = new FormData(form);
+      try {
+        let res = await fetch(form.action, {
+          method: "POST",
+          body: data,
+          headers: { 'Accept': 'application/json' }
+        });
+        if (res.ok) {
+          successMsg.style.display = "block";
+          errorMsg.style.display = "none";
+          form.reset();
+        } else {
+          throw new Error("Error en el envío");
+        }
+      } catch (err) {
+        errorMsg.style.display = "block";
+        successMsg.style.display = "none";
+      }
+    });
+  </script>
+
+</body>
+</html>
