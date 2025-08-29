@@ -17,10 +17,10 @@
       --gris:#1a1a1a;
       --gris-claro:#bfbfbf;
       --blanco:#ffffff;
-      --acento:#e4d4b7; /* Beige premium dorado */
+      --acento:#e4d4b7;
     }
 
-    *{margin:0;padding:0;box-sizing:border-box}
+    *{margin:0;padding:0;box-sizing:border-box;scroll-behavior:smooth}
 
     body{
       font-family:'Outfit',sans-serif;
@@ -39,10 +39,49 @@
       border-bottom:1px solid rgba(255,255,255,.05);
       z-index:1000;
     }
-    header h1{font-size:22px;font-weight:700;color:var(--acento)}
+    header h1{font-size:22px;font-weight:700;color:var(--acento);letter-spacing:1px}
     nav ul{display:flex;gap:30px;list-style:none}
-    nav a{color:#ccc;text-decoration:none;font-weight:400;transition:.3s}
-    nav a:hover{color:var(--acento)}
+    nav a{color:#ccc;text-decoration:none;font-weight:400;transition:.3s;position:relative}
+    nav a:hover,nav a.active{color:var(--acento)}
+    nav a.active::after{
+      content:"";position:absolute;bottom:-6px;left:0;right:0;height:2px;
+      background:var(--acento);border-radius:2px
+    }
+
+    /* Hero */
+    .hero{
+      position: relative;height: 544px;
+      display: flex;justify-content: center;align-items: center;
+      text-align: center;overflow: hidden;
+    }
+    .hero video{
+      position: absolute;top: 50%;left: 50%;
+      width: 864px;height: 480px;object-fit: cover;
+      transform: translate(-50%, -50%);z-index: 0;
+    }
+    .hero::before{
+      content:"";position:absolute;top:0;left:0;width:100%;height:100%;
+      background:linear-gradient(to bottom,rgba(0,0,0,.6),rgba(0,0,0,.9));
+      z-index:1;
+    }
+    .hero-content{
+      position: relative;z-index:2;
+      color: var(--blanco);
+      padding: 20px;max-width: 650px;
+      animation:fadeInUp 1.5s ease;
+    }
+    .hero-content h2 span{color:var(--acento)}
+    @keyframes fadeInUp{
+      from{opacity:0;transform:translateY(40px)}
+      to{opacity:1;transform:translateY(0)}
+    }
+
+    .btn-cta{
+      display:inline-block;padding:14px 36px;
+      background:var(--acento);color:var(--negro);font-weight:600;
+      border-radius:40px;text-decoration:none;transition:.3s
+    }
+    .btn-cta:hover{filter:brightness(1.1);transform:translateY(-2px) scale(1.03)}
 
     /* Secciones */
     section{padding:120px 20px;max-width:1200px;margin:auto;position:relative}
@@ -52,35 +91,22 @@
       background:var(--acento);margin:40px auto 0;border-radius:2px;
     }
 
-    /* Hero */
-    .hero{
-      background:linear-gradient(rgba(14,14,14,.7),rgba(14,14,14,.9)),
-                 url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1500&q=80') center/cover;
-      text-align:center;padding:200px 20px 160px;
-    }
-    .hero h2{font-size:56px;font-weight:700;margin-bottom:20px;color:var(--blanco)}
-    .hero p{font-size:18px;color:var(--gris-claro);max-width:650px;margin:auto;margin-bottom:40px}
-    .btn-cta{
-      display:inline-block;padding:14px 36px;
-      background:var(--acento);color:var(--negro);font-weight:600;
-      border-radius:40px;text-decoration:none;transition:.3s
-    }
-    .btn-cta:hover{filter:brightness(1.1);transform:translateY(-2px)}
-
     /* Servicios */
     .servicios ul{
       display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
       gap:25px;list-style:none;margin-top:50px
     }
     .servicios li{
-      background:var(--gris);padding:35px;border-radius:14px;
-      border:1px solid rgba(255,255,255,.08);
+      background:rgba(255,255,255,.05);
+      padding:35px;border-radius:14px;
+      backdrop-filter:blur(10px);
+      border:1px solid rgba(255,255,255,.1);
       text-align:center;transition:.3s
     }
     .servicios li i{font-size:32px;color:var(--acento);margin-bottom:12px}
-    .servicios li:hover{transform:translateY(-8px);box-shadow:0 0 18px rgba(228,212,183,.15)}
+    .servicios li:hover{transform:translateY(-8px);box-shadow:0 0 25px rgba(228,212,183,.2)}
 
-    /* Portafolio */
+    /* Galería */
     .galeria{
       display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
       gap:25px;margin-top:50px
@@ -99,8 +125,7 @@
     .galeria div:hover img{transform:scale(1.05);filter:brightness(1.1)}
     .galeria div:hover span{transform:translateY(0)}
 
-    /* Proceso creativo */
-    .proceso{margin-top:40px}
+    /* Pasos */
     .pasos{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:25px;margin-top:40px}
     .paso{
       text-align:center;padding:25px;background:var(--gris);
@@ -108,7 +133,7 @@
       transition:.3s
     }
     .paso i{font-size:28px;color:var(--acento);margin-bottom:10px}
-    .paso:hover{transform:translateY(-5px);background:rgba(255,255,255,.03)}
+    .paso:hover{transform:translateY(-5px);background:rgba(255,255,255,.05)}
 
     /* Sobre */
     .sobre p{font-size:18px;color:var(--gris-claro);max-width:750px;margin:auto;text-align:center}
@@ -117,23 +142,22 @@
     .contact-card{
       background:var(--gris);
       border:1px solid rgba(255,255,255,.08);
-      border-radius:14px;
-      padding:35px;
-      max-width:600px;margin:40px auto;
-      text-align:center;
+      border-radius:14px;padding:35px;
+      max-width:600px;margin:40px auto;text-align:center;
     }
     form{display:flex;flex-direction:column;gap:15px;margin-top:20px}
     input,textarea{
       padding:14px;font-size:15px;background:rgba(255,255,255,.03);
       border:1px solid rgba(255,255,255,.1);color:var(--blanco);
-      border-radius:8px;outline:none
+      border-radius:8px;outline:none;transition:.3s
     }
+    input:focus,textarea:focus{border-color:var(--acento);box-shadow:0 0 8px rgba(228,212,183,.4)}
     button{
       padding:14px;background:var(--acento);color:var(--negro);
       border:none;font-weight:600;font-size:15px;
       border-radius:30px;cursor:pointer;transition:.3s
     }
-    button:hover{filter:brightness(1.1);transform:translateY(-2px)}
+    button:hover{filter:brightness(1.1);transform:translateY(-2px) scale(1.05)}
     .success-msg,.error-msg{display:none;margin-top:10px;font-size:14px}
     .success-msg{color:#8f8}
     .error-msg{color:#f55}
@@ -142,11 +166,11 @@
     footer{background:#0b0b0b;color:#777;text-align:center;padding:40px 20px;font-size:14px;border-top:1px solid rgba(255,255,255,.05)}
     .socials{margin-top:15px}
     .socials a{color:#777;font-size:20px;margin:0 8px;transition:.3s}
-    .socials a:hover{color:var(--acento);transform:scale(1.2)}
+    .socials a:hover{color:var(--acento);transform:scale(1.3) rotate(5deg)}
 
     @media(max-width:768px){
       header{padding:15px 25px;flex-direction:column;align-items:flex-start;gap:10px}
-      .hero h2{font-size:36px}
+      .hero h2{font-size:28px}
     }
   </style>
 </head>
@@ -157,7 +181,7 @@
     <h1>Vector Lab</h1>
     <nav>
       <ul>
-        <li><a href="#inicio">Inicio</a></li>
+        <li><a href="#inicio" class="active">Inicio</a></li>
         <li><a href="#servicios">Servicios</a></li>
         <li><a href="#portafolio">Portafolio</a></li>
         <li><a href="#proceso">Proceso</a></li>
@@ -169,41 +193,37 @@
 
   <!-- HERO -->
   <section id="inicio" class="hero">
-    <h2>Diseñamos Marcas con <span style="color:var(--acento)">Identidad</span></h2>
-    <p>Un estudio creativo que convierte ideas en imágenes poderosas. Branding, logos y comunicación visual con un enfoque premium.</p>
-    <a href="#contacto" class="btn-cta">Solicitar Presupuesto</a>
+    <video autoplay muted loop playsinline>
+      <source src="video.mp4" type="video/mp4">
+      Tu navegador no soporta el video.
+    </video>
+    <div class="hero-content">
+      <h2>Diseñamos Marcas con <span>Identidad</span></h2>
+      <p>Un estudio creativo que convierte ideas en imágenes poderosas. Branding, logos y comunicación visual con un enfoque premium.</p>
+      <a href="#contacto" class="btn-cta">Solicitar Presupuesto</a>
+    </div>
   </section>
 
   <!-- SERVICIOS -->
-<section id="servicios" class="servicios">
-  <h2>Servicios</h2>
-  <ul>
-    <li><i class="fas fa-paint-brush"></i> 🎨<br><strong>Diseño de Logos</strong><p>Creamos logotipos únicos que reflejan la esencia de tu marca.</p></li>
-    <li><i class="fas fa-film"></i> 🎬<br><strong>Edición de Video</strong><p>Producción y edición profesional para captar la atención.</p></li>
-    <li><i class="fas fa-box"></i> 📦<br><strong>Branding Corporativo</strong><p>Construimos la identidad visual completa de tu empresa.</p></li>
-    <li><i class="fas fa-mobile-alt"></i> 📱<br><strong>Diseño para Redes</strong><p>Contenido optimizado para Instagram, TikTok, Facebook y más.</p></li>
-    <li><i class="fas fa-lightbulb"></i> 💡<br><strong>Motion Graphics</strong><p>Animaciones creativas que hacen que tu marca cobre vida.</p></li>
-    <li><i class="fas fa-brain"></i> 🧠<br><strong>Asesoría Creativa</strong><p>Estrategias y guía para destacar con impacto.</p></li>
-  </ul>
-</section>
-
+  <section id="servicios" class="servicios">
+    <h2>Servicios</h2>
+    <ul>
+      <li><i class="fas fa-paint-brush"></i> 🎨<br><strong>Diseño de Logos</strong><p>Creamos logotipos únicos que reflejan la esencia de tu marca.</p></li>
+      <li><i class="fas fa-film"></i> 🎬<br><strong>Edición de Video</strong><p>Producción y edición profesional para captar la atención.</p></li>
+      <li><i class="fas fa-box"></i> 📦<br><strong>Branding Corporativo</strong><p>Construimos la identidad visual completa de tu empresa.</p></li>
+      <li><i class="fas fa-mobile-alt"></i> 📱<br><strong>Diseño para Redes</strong><p>Contenido optimizado para Instagram, TikTok, Facebook y más.</p></li>
+      <li><i class="fas fa-lightbulb"></i> 💡<br><strong>Motion Graphics</strong><p>Animaciones creativas que hacen que tu marca cobre vida.</p></li>
+      <li><i class="fas fa-brain"></i> 🧠<br><strong>Asesoría Creativa</strong><p>Estrategias y guía para destacar con impacto.</p></li>
+    </ul>
+  </section>
 
   <!-- PORTAFOLIO -->
   <section id="portafolio">
     <h2>Portafolio</h2>
     <div class="galeria">
-      <div>
-        <img src="https://img.freepik.com/psd-premium/plantilla-maqueta-logotipo-limpio-minimalista-3d_528542-172.jpg" alt="Proyecto 1">
-        <span>Identidad Minimalista</span>
-      </div>
-      <div>
-        <img src="https://img.freepik.com/vector-premium/ilustracion-icono-vector-plantilla-negocio-logotipo-letra_683738-2758.jpg" alt="Proyecto 2">
-        <span>Diseño Tipográfico</span>
-      </div>
-      <div>
-        <img src="https://img.freepik.com/vector-premium/logotipo-nuevos-logotipos-logotipo-adobe-logotipo-photoshop-diseno-vectorial_811396-710.jpg" alt="Proyecto 3">
-        <span>Branding Corporativo</span>
-      </div>
+      <div><img src="https://img.freepik.com/psd-premium/plantilla-maqueta-logotipo-limpio-minimalista-3d_528542-172.jpg"><span>Identidad Minimalista</span></div>
+      <div><img src="https://img.freepik.com/vector-premium/ilustracion-icono-vector-plantilla-negocio-logotipo-letra_683738-2758.jpg"><span>Diseño Tipográfico</span></div>
+      <div><img src="https://img.freepik.com/vector-premium/logotipo-nuevos-logotipos-logotipo-adobe-logotipo-photoshop-diseno-vectorial_811396-710.jpg"><span>Branding Corporativo</span></div>
     </div>
   </section>
 
@@ -250,8 +270,28 @@
     </div>
   </footer>
 
-  <!-- JS Form Handler -->
+  <!-- JS -->
   <script>
+    // Scrollspy
+    const sections = document.querySelectorAll("section");
+    const navLinks = document.querySelectorAll("nav a");
+    window.addEventListener("scroll", () => {
+      let current = "";
+      sections.forEach(sec => {
+        const top = window.scrollY;
+        if(top >= sec.offsetTop - 120){
+          current = sec.getAttribute("id");
+        }
+      });
+      navLinks.forEach(a=>{
+        a.classList.remove("active");
+        if(a.getAttribute("href").includes(current)){
+          a.classList.add("active");
+        }
+      });
+    });
+
+    // Form handler
     const form = document.getElementById("contactForm");
     const successMsg = document.querySelector(".success-msg");
     const errorMsg = document.querySelector(".error-msg");
@@ -269,15 +309,12 @@
           successMsg.style.display = "block";
           errorMsg.style.display = "none";
           form.reset();
-        } else {
-          throw new Error("Error en el envío");
-        }
-      } catch (err) {
+        } else throw new Error("Error en el envío");
+      } catch {
         errorMsg.style.display = "block";
         successMsg.style.display = "none";
       }
     });
   </script>
-
 </body>
 </html>
